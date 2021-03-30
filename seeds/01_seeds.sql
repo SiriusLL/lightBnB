@@ -17,6 +17,7 @@ VALUES ('Eva Stanley', 'sebastianguerra@ymail.com', '$2a$10$FB/BOAVhpuLvpOREQVmv
 
 
 INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, parking_spaces, number_of_bathrooms, number_of_bedrooms, country, street, city, province, post_code, active)
+
 VALUES (1, 'Speed lamp', 'description', 'https://images.pexels.com/photos/2086676/pexelx-photo-2086676.jpeg?auto=compress&cs=timysrgb&h=350', 'https://images.pexels.com/photos/2086676/pexelx-photo-2086676.jpeg', 93061, 6, 4, 8, 'Canada', '536 Namsub Highway', 'Sotboske', 'Quebec', '28142', true),
   
   (1, 'Blank corner', 'description', 'https://images.pexels.com/photos/2121121/pexelx-photo-2121121.jpeg?auto=compress&cs=timysrgb&h=350', 'https://images.pexels.com/photos/2121121/pexelx-photo-2121121.jpeg', 85234, 6, 6, 7, 'Canada', '651 Nami Road', 'Bohbatev', 'Alberta', '38680', true),
