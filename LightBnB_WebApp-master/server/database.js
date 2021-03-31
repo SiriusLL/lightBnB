@@ -93,10 +93,51 @@ exports.addUser = addUser;
  * @return {Promise<[{}]>} A promise to the reservations.
  */
 const getAllReservations = function(guest_id, limit = 10) {
-  return getAllProperties(null, 2);
+  return pool.query(`
+  SELECT properties.id, properties.title, properties.cost_per_night, reservations.start_date, reservations.end_date, AVG(property_reviews.rating) as average_rating
+FROM reservations
+JOIN properties ON property_id = properties.id
+JOIN property_reviews ON properties.id = property_reviews.property_id
+WHERE reservations.guest_id = $1 AND start_date < now()::date
+GROUP BY properties.id, reservations.id
+ORDER BY start_date
+LIMIT $2;
+  `, [guest_id, limit])
+  .then(function(res) {
+    console.log('this is the chosen two----------------------------->', res.rows)
+    if (res.rows.length === 0) {
+      return null;
+    }
+    return res.rows
+  }); 
 }
 exports.getAllReservations = getAllReservations;
-
+// rows:
+//    [ { id: 934,
+//        title: 'Secret take',
+//        cost_per_night: 31345,
+//        start_date: 2014-09-23T00:00:00.000Z,
+//        average_rating: '4.3333333333333333' },
+//      { id: 923,
+//        title: 'Nearer guide',
+//        cost_per_night: 58276,
+//        start_date: 2015-11-26T00:00:00.000Z,
+//        average_rating: '4.2000000000000000' },
+//      { id: 887,
+//        title: 'Peace brown',
+//        cost_per_night: 25636,
+//        start_date: 2018-04-11T00:00:00.000Z,
+//        average_rating: '4.2500000000000000' },
+//      { id: 387,
+//        title: 'Difficult stopped',
+//        cost_per_night: 4444,
+//        start_date: 2018-05-20T00:00:00.000Z,
+//        average_rating: '3.5555555555555556' },
+//      { id: 786,
+//        title: 'Care bowl',
+//        cost_per_night: 22997,
+//        start_date: 2020-01-01T00:00:00.000Z,
+//        average_rating: '4.8000000000000000' } ]
 /// Properties
 
 /**
